@@ -18,7 +18,7 @@ function App() {
           </button>
         </div>
       ) : (
-        <Game started={started} setStarted={setStarted} />
+        <Game setStarted={setStarted} />
       )}
     </>
   );
