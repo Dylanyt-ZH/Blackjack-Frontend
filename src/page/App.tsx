@@ -10,7 +10,7 @@ function App() {
       <Head />
       {!started ? (
         <div className="center-container">
-          <h1 className="game-title">Welcome to Blackjack</h1>
+          <h1 className="game-title">Welcome to Dylan's Blackjack</h1>
           <p className="game-desc">Get ready to play!</p>
 
           <button className="start-btn" onClick={() => setStarted(true)}>
