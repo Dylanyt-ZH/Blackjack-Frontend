@@ -2,36 +2,36 @@ import "./Game.css";
 import Pocker from "../componments/pocker";
 import { useState } from "react";
 import React from "react";
-import cardsDict from "../../src/assets/pockers.json";
+import cardsDictJson from "../../src/assets/pockers.json";
+
+const cardsDict: Record<string, boolean> = cardsDictJson;
 
 type GameProps = {
   setStarted: React.Dispatch<React.SetStateAction<boolean>>;
 };
-Object.entries(cardsDict).forEach(([key, value]) => {
-  console.log(`key: ${key}, value: ${value}`);
-});
 
 function Game({ setStarted }: GameProps) {
-  // Get pocker image paths
-  const pockerImagePaths = Object.keys(
-    import.meta.glob("../assets/pockers/*.svg")
-  );
-  const fixedPockerImagePaths = pockerImagePaths.map((path) =>
-    path.replace("..", "src")
-  );
-
   const [currentImg, setCurrentImg] = useState(
-    fixedPockerImagePaths[
-      Math.floor(Math.random() * fixedPockerImagePaths.length)
-    ]
+    "src/assets/pockers/joker-s.svg"
   );
 
   function RandomPockerImage() {
-    const randomIndex = Math.floor(
-      Math.random() * fixedPockerImagePaths.length
-    );
-    setCurrentImg(fixedPockerImagePaths[randomIndex]);
-    console.log("Current Image:", fixedPockerImagePaths[randomIndex]);
+    if (Object.values(cardsDict).every((value) => value === true)) {
+      console.log("All cards have been used!");
+      return;
+    }
+
+    while (true) {
+      const keys = Object.keys(cardsDict);
+      const randomKey = keys[Math.floor(Math.random() * keys.length)];
+
+      if (cardsDict[randomKey] == false) {
+        cardsDict[randomKey] = true;
+        console.log("Random key:", randomKey);
+        setCurrentImg("src/assets/pockers/" + randomKey + ".svg");
+        break;
+      }
+    }
   }
 
   return (
